@@ -3,6 +3,7 @@ import { Component } from 'react'
 import { Table, Column, Cell } from 'fixed-data-table'
 import Immutable from 'immutable'
 import InputHeader from './InputHeader'
+import DataRow from './DataRow'
 import hasClass from './utils/hasClass'
 import getListFieldText from './utils/getListFieldText'
 
@@ -169,7 +170,7 @@ class DataSelect extends Component {
                       handleKeyPress={this.handleKeyPress}
                       search={this.state.search} />
                   }
-            cell={<DataCell data={this.state.list}
+            cell={<DataRow data={this.state.list}
                             handleClick={this.handleClick}
                             highlighted={this.state.highlighted}
                             listField={this.props.listField} />
@@ -177,22 +178,6 @@ class DataSelect extends Component {
             fixed={true}
             width={275} />
         </Table>
-      </div>
-    )
-  }
-}
-
-class DataCell extends Component {
-  handleClick = (e) => {
-    this.props.handleClick(this.props.rowIndex)
-  }
-
-  render() {
-    const { rowIndex, data } = this.props
-    return (
-      <div onClick={this.handleClick}
-            className={this.props.highlighted === rowIndex ? 'data-select-active data-row' : 'data-row'}>
-        {getListFieldText(data.get(rowIndex), this.props.listField)}
       </div>
     )
   }
