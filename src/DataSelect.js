@@ -14,6 +14,7 @@ class DataSelect extends Component {
       search: '',
       list: Immutable.List(),
       canCollapse: true,
+      scrolling: false,
     }
   }
 
@@ -111,12 +112,23 @@ class DataSelect extends Component {
   }
 
   /**
+   * Track start of scroll so if mouseUp happens while hovering
+   * cursor over different part of the app, it still knows to refocus
+   */
+  mouseDown = (e) => {
+    if (hasClass(e.target, 'ScrollbarLayout_face')) {
+      this.setState({scrolling: true})
+    }
+  }
+
+  /**
    * After clicking the scrollbar, refocus the input field.
    * By clicking into the scrollbar originally, input loses its focus
    * and needs it back in order to detect if the user clicks outside.
    */
   mouseUp = (e) => {
-    if (hasClass(e.target, 'ScrollbarLayout_face')) {
+    if (this.state.scrolling || hasClass(e.target, 'ScrollbarLayout_face')) {
+      this.setState({scrolling: false})
       this._input.focus()
     }
   }
@@ -142,7 +154,8 @@ class DataSelect extends Component {
       <div className="col-sm-4">
       <div className="data-select" onMouseEnter={this.mouseEnter}
                                     onMouseLeave={this.mouseLeave}
-                                    onMouseUp={this.mouseUp}>
+                                    onMouseUp={this.mouseUp}
+                                    onMouseDown={this.mouseDown}>
         <Table
           rowHeight={30}
           headerHeight={36}
