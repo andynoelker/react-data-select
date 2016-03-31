@@ -2,6 +2,7 @@ import React from 'react'
 import { Component } from 'react'
 import { Table, Column, Cell } from 'fixed-data-table'
 import Immutable from 'immutable'
+import hasClass from './utils/hasClass'
 
 class DataSelect extends Component {
   constructor(props) {
@@ -210,16 +211,6 @@ class DataCell extends Component {
         {data.getIn([rowIndex, 'wh_aisle_id']) + '-' + data.getIn([rowIndex, 'wh_location_name'])}
       </div>
     )
-  }
-}
-
-function hasClass(el, selector) {
-  var className = " " + selector + " "
-
-  if ((" " + el.className + " ").replace(/[\n\t]/g, " ").indexOf(className) > -1) {
-    return true
-  } else {
-    return false
   }
 }
 
