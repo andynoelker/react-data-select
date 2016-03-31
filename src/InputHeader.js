@@ -3,18 +3,18 @@ import { Component } from 'react'
 
 class InputHeader extends Component {
   focus = () => {
-    this.refs.inputHeader.focus()
+    this._input.focus()
   }
 
   blur = () => {
-    this.refs.inputHeader.blur()
+    this._input.blur()
   }
 
   render() {
     return (
       <div className="selectize-input items not-full has-options">
         <input type="text"  className="search-field" placeholder="Enter a location..."
-                            ref="inputHeader"
+                            ref={(c) => this._input = c}
                             value={this.props.search}
                             onChange={this.props.searchChange}
                             onKeyDown={this.props.handleKeyPress}
