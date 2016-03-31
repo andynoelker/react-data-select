@@ -149,7 +149,6 @@ class DataSelect extends Component {
   render() {
     let dataLength = this.state.show ? this.state.list.size : 0
     return (
-      <div className="col-sm-4">
       <div className="data-select" onMouseEnter={this.mouseEnter}
                                     onMouseLeave={this.mouseLeave}
                                     onMouseUp={this.mouseUp}
@@ -177,7 +176,6 @@ class DataSelect extends Component {
             fixed={true}
             width={275} />
         </Table>
-      </div>
       </div>
     )
   }
