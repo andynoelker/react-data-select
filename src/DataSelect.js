@@ -2,6 +2,7 @@ import React from 'react'
 import { Component } from 'react'
 import { Table, Column, Cell } from 'fixed-data-table'
 import Immutable from 'immutable'
+import InputHeader from './InputHeader'
 import hasClass from './utils/hasClass'
 import getListFieldText from './utils/getListFieldText'
 
@@ -109,8 +110,8 @@ class DataSelect extends Component {
   }
 
   /**
-   * Track start of scroll so if mouseUp happens while hovering
-   * cursor over different part of the app, it still knows to refocus
+   * Track start of scroll so if mouseUp happens while hovering cursor
+   * over different part of the app, it still knows to refocus
    */
   mouseDown = (e) => {
     if (hasClass(e.target, 'ScrollbarLayout_face')) {
@@ -176,31 +177,6 @@ class DataSelect extends Component {
             fixed={true}
             width={275} />
         </Table>
-      </div>
-    )
-  }
-}
-
-class InputHeader extends Component {
-  focus = () => {
-    this.refs.inputHeader.focus()
-  }
-
-  blur = () => {
-    this.refs.inputHeader.blur()
-  }
-
-  render() {
-    return (
-      <div className="selectize-input items not-full has-options">
-        <input type="text"  className="search-field" placeholder="Enter a location..."
-                            ref="inputHeader"
-                            value={this.props.search}
-                            onChange={this.props.searchChange}
-                            onKeyDown={this.props.handleKeyPress}
-                            onFocus={this.props.handleFocus}
-                            onBlur={this.props.handleBlur}
-                             />
       </div>
     )
   }
