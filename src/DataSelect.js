@@ -3,6 +3,7 @@ import { Component } from 'react'
 import { Table, Column, Cell } from 'fixed-data-table'
 import Immutable from 'immutable'
 import hasClass from './utils/hasClass'
+import getListFieldText from './utils/getListFieldText'
 
 class DataSelect extends Component {
   constructor(props) {
@@ -37,8 +38,7 @@ class DataSelect extends Component {
   }
 
   handleClick = (rowIndex) => {
-    let searchText = this.state.list.getIn([rowIndex, 'wh_aisle_id'])
-                      + '-' + this.state.list.getIn([rowIndex, 'wh_location_name'])
+    let searchText = getListFieldText(this.state.list.get(rowIndex), this.props.listField)
     let filtered = Immutable.List().push(this.state.list.get(rowIndex))
     this.setState({
       selected: this.state.list.get(rowIndex),
@@ -56,7 +56,7 @@ class DataSelect extends Component {
   filterList = (search) => {
     const regex = new RegExp(search, 'i')
     let filtered = this.props.data.filter(item => {
-      return ((item.get('wh_aisle_id') + '-' + item.get('wh_location_name')).search(regex) > -1)
+      return (getListFieldText(item, this.props.listField).search(regex) > -1)
     })
 
     this.setState({
@@ -79,8 +79,7 @@ class DataSelect extends Component {
     } else if (e.key === 'Enter') {
       if (this.state.list.size > 0) {
         this._input.blur()
-        let searchText = this.state.list.getIn([this.state.highlighted, 'wh_aisle_id'])
-                        + '-' + this.state.list.getIn([this.state.highlighted, 'wh_location_name'])
+        let searchText = getListFieldText(this.state.list.get(this.state.highlighted), this.props.listField)
         let filtered = Immutable.List().push(this.state.list.get(this.state.highlighted))
         this.setState({
           selected: this.state.list.get(this.state.highlighted),
@@ -171,7 +170,8 @@ class DataSelect extends Component {
                   }
             cell={<DataCell data={this.state.list}
                             handleClick={this.handleClick}
-                            highlighted={this.state.highlighted} />
+                            highlighted={this.state.highlighted}
+                            listField={this.props.listField} />
                   }
             fixed={true}
             width={275} />
@@ -212,11 +212,11 @@ class DataCell extends Component {
   }
 
   render() {
-    const {rowIndex, data,  ...props} = this.props
+    const { rowIndex, data } = this.props
     return (
       <div onClick={this.handleClick}
             className={this.props.highlighted === rowIndex ? 'data-select-active data-row' : 'data-row'}>
-        {data.getIn([rowIndex, 'wh_aisle_id']) + '-' + data.getIn([rowIndex, 'wh_location_name'])}
+        {getListFieldText(data.get(rowIndex), this.props.listField)}
       </div>
     )
   }
