@@ -46,7 +46,6 @@ class DataSelect extends Component {
       search: searchText,
       show: false,
       list: filtered,
-      canCollapse : true,
     })
   }
 
@@ -89,7 +88,6 @@ class DataSelect extends Component {
           highlighted: 0,
           search: searchText,
           show: false,
-          canCollapse : true,
         })
       }
     }
@@ -170,8 +168,7 @@ class DataSelect extends Component {
                       handleFocus={this.handleFocus}
                       handleBlur={this.handleBlur}
                       handleKeyPress={this.handleKeyPress}
-                      search={this.state.search}
-                      canCollapse={this.state.canCollapse} />
+                      search={this.state.search} />
                   }
             cell={<DataCell data={this.state.list}
                             handleClick={this.handleClick}
