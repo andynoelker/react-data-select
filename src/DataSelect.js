@@ -19,7 +19,7 @@ class DataSelect extends Component {
   }
 
   componentWillMount() {
-    this.setState({list: this.props.locations})
+    this.setState({list: this.props.data})
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -55,7 +55,7 @@ class DataSelect extends Component {
 
   filterList = (search) => {
     const regex = new RegExp(search, 'i')
-    let filtered = this.props.locations.filter(item => {
+    let filtered = this.props.data.filter(item => {
       return ((item.get('wh_aisle_id') + '-' + item.get('wh_location_name')).search(regex) > -1)
     })
 
