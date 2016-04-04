@@ -1,11 +1,8 @@
 import { expect } from 'chai'
-import Immutable from 'immutable'
 import getListFieldText from '../../src/utils/getListFieldText'
-import { fakeData } from '../helpers/data'
+import { fakeImmutableData as data } from '../helpers/data'
 
 describe('getListFieldText', () => {
-    let data = Immutable.fromJS(fakeData)
-
     it ('should return a single field when listField is a string', () => {
         expect(getListFieldText(data.get(0), 'lastName')).to.equal('Vader')
     })
@@ -19,7 +16,9 @@ describe('getListFieldText', () => {
               .to.equal('Darth-Vader')
     })
 
-    it ('should throw an Error when listField is not an object or a string', () => {
+    it ('should throw Errors when listField is not a string or properly formatted object', () => {
       expect(() => getListFieldText(data.get(0), ['firstName', 'lastName'])).to.throw(Error)
+      expect(() => getListFieldText(data.get(0), {fields: 0})).to.throw(Error)
+      expect(() => getListFieldText(data.get(0), {fields: [0, 1]})).to.throw(Error)
     })
 })
