@@ -2,4 +2,4 @@ before_script:
   - npm install
 
 test:
-  script: npm cover
+  script: npm run cover
