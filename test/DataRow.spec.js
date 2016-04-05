@@ -16,7 +16,7 @@ describe('DataRow', () => {
     props = { data: data, rowIndex: 0, highlighted: 1, handleClick: handleClick, listField: 'firstName' }
   })
 
-  it('should render with text from passed data', () => {
+  it ('should render with text from passed data', () => {
     let component = TestUtils.renderIntoDocument(<DataRow {...props} />)
     let row = TestUtils.findRenderedDOMComponentWithTag(component, "div")
 
@@ -24,14 +24,14 @@ describe('DataRow', () => {
     expect(row.innerHTML).to.equal('Darth')
   })
 
-  it('should have active class if it is the selected row', () => {
+  it ('should have active class if it is the selected row', () => {
     let component = TestUtils.renderIntoDocument(<DataRow {...props} highlighted={0} />)
     let row = TestUtils.findRenderedDOMComponentWithTag(component, "div")
 
     expect(row.className).to.equal('data-select-active data-row')
   })
 
-  it('should call the passed function when clicked', () => {
+  it ('should call the passed function when clicked', () => {
     let component = TestUtils.renderIntoDocument(<DataRow {...props} />)
     let row = TestUtils.findRenderedDOMComponentWithTag(component, "div")
 
