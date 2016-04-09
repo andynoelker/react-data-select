@@ -126,7 +126,7 @@ class DataSelect extends Component {
    * and needs it back in order to detect if the user clicks outside.
    */
   mouseUp = (e) => {
-    if (this.state.scrolling || hasClass(e.target, 'ScrollbarLayout_face')) {
+    if (hasClass(e.target, 'ScrollbarLayout_face') || this.state.scrolling) {
       this.setState({scrolling: false})
       this._input.focus()
     }
