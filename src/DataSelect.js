@@ -186,4 +186,17 @@ class DataSelect extends Component {
   }
 }
 
+DataSelect.propTypes = {
+  handleChange: React.PropTypes.func,
+  listField: React.PropTypes.object,
+  data: (props, propName, componentName) => {
+    if (!Array.isArray(props[propName]) && !Immutable.List.isList(props[propName])) {
+      return new Error(
+        'Invalid prop `' + propName + '` supplied to' +
+        ' `' + componentName + '`. Validation failed.'
+      );
+    }
+  }
+}
+
 export default DataSelect
