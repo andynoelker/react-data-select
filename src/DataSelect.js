@@ -27,6 +27,14 @@ class DataSelect extends Component {
     this.setState({data: data, list: data})
   }
 
+  componentWillReceiveProps(nextProps) {
+    let data = Immutable.List.isList(nextProps.data) ? nextProps.data : Immutable.fromJS(nextProps.data)
+    if (data.hashCode() !== this.state.data.hashCode()) {
+      console.log('not equal')
+      this.setState({data: data, list: data})
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return     this.state.highlighted !== nextState.highlighted
             || this.state.show !== nextState.show
