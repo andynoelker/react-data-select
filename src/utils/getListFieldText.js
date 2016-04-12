@@ -1,5 +1,7 @@
 export default function getListFieldText(data, listField) {
-  if (typeof listField === 'string') {
+  if (typeof data === 'string') {
+    return data
+  } else if (typeof listField === 'string') {
     return buildStringFromData(data, listField)
   } else {
     if (typeof listField.fields !== 'undefined') {
