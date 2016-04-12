@@ -30,7 +30,6 @@ class DataSelect extends Component {
   componentWillReceiveProps(nextProps) {
     let data = Immutable.List.isList(nextProps.data) ? nextProps.data : Immutable.fromJS(nextProps.data)
     if (data.hashCode() !== this.state.data.hashCode()) {
-      console.log('not equal')
       this.setState({data: data, list: data})
     }
   }
@@ -195,7 +194,7 @@ class DataSelect extends Component {
 }
 
 DataSelect.propTypes = {
-  handleChange: React.PropTypes.func,
+  handleChange: React.PropTypes.func.isRequired,
   listField: (props, propName, componentName) => {
     if (typeof props[propName] !== 'string' && typeof props[propName] !== 'object') {
       return new Error(
@@ -205,7 +204,7 @@ DataSelect.propTypes = {
     }
   },
   data: (props, propName, componentName) => {
-    if (!Array.isArray(props[propName]) && !Immutable.List.isList(props[propName])) {
+    if (props[propName] === null || (!Array.isArray(props[propName]) && !Immutable.List.isList(props[propName]))) {
       return new Error(
         'Invalid prop `' + propName + '` supplied to' +
         ' `' + componentName + '`. Validation failed.'
