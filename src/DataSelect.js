@@ -15,6 +15,7 @@ class DataSelect extends Component {
       highlighted: 0,
       selected: undefined,
       search: '',
+      data: Immutable.List(),
       list: Immutable.List(),
       canCollapse: true,
       scrolling: false,
@@ -22,14 +23,16 @@ class DataSelect extends Component {
   }
 
   componentWillMount() {
-    this.setState({list: this.props.data})
+    let data = Immutable.List.isList(this.props.data) ? this.props.data : Immutable.fromJS(this.props.data)
+    this.setState({data: data, list: data})
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return     this.state.highlighted !== nextState.highlighted
-            || this.state.list.hashCode() !== nextState.list.hashCode()
             || this.state.show !== nextState.show
             || this.state.search !== nextState.search
+            || this.state.data.hashCode() !== nextState.data.hashCode()
+            || this.state.list.hashCode() !== nextState.list.hashCode()
   }
 
   componentDidUpdate() {
@@ -57,7 +60,7 @@ class DataSelect extends Component {
 
   filterList = (search) => {
     const regex = new RegExp(search, 'i')
-    let filtered = this.props.data.filter(item => {
+    let filtered = this.state.data.filter(item => {
       return (getListFieldText(item, this.props.listField).search(regex) > -1)
     })
 
