@@ -193,6 +193,10 @@ class DataSelect extends Component {
   }
 }
 
+DataSelect.defaultProps = {
+  width: 275
+}
+
 DataSelect.propTypes = {
   handleChange: React.PropTypes.func.isRequired,
   listField: (props, propName, componentName) => {
