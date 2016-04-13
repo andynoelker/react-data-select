@@ -8,18 +8,18 @@ import Immutable from 'immutable'
 import { fakeImmutableData as Immutabledata, fakeData } from './helpers/data'
 
 describe('DataSelect', () => {
-    let component, divs, input, handleChange, sandbox
+    let component, divs, input, onChange, sandbox
 
     beforeEach('instantiate DataSelect instance', () => {
       sandbox = sinon.sandbox.create()
       sandbox.stub(console, "error")
 
-      handleChange = sinon.spy((e) => {
+      onChange = sinon.spy((e) => {
         return 'changed'
       })
 
       component = TestUtils.renderIntoDocument(<DataSelect  data={Immutabledata}
-                                                            handleChange={handleChange}
+                                                            onChange={onChange}
                                                             listField={{fields: ['firstName', 'lastName']}} />)
       divs = TestUtils.scryRenderedDOMComponentsWithTag(component, "div")
       input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
@@ -37,14 +37,14 @@ describe('DataSelect', () => {
 
     it ('should convert Javascript data array to ImmutableJS List', () => {
       let component = TestUtils.renderIntoDocument(<DataSelect  data={fakeData}
-                                                            handleChange={handleChange}
+                                                            onChange={onChange}
                                                             listField={{fields: ['firstName', 'lastName']}} />)
       expect(Immutable.List.isList(component.state.data)).to.be.true
     })
 
     it ('should update data list when passed new data', () => {
       let component = TestUtils.renderIntoDocument(<Parent  data={Immutable.List()}
-                                                            handleChange={handleChange}
+                                                            onChange={onChange}
                                                             listField={{fields: ['firstName', 'lastName']}} />)
 
       expect(component.dataSelect.state.list.size).to.equal(0)
@@ -175,7 +175,7 @@ describe('DataSelect', () => {
     it ('should ignore Enter press for empty list', () => {
       let emptyData = Immutable.List([])
       component = TestUtils.renderIntoDocument(<DataSelect  data={emptyData}
-                                                            handleChange={handleChange}
+                                                            onChange={onChange}
                                                             listField={{fields: ['firstName', 'lastName']}} />)
       let divs = TestUtils.scryRenderedDOMComponentsWithTag(component, "div")
       let input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
@@ -192,14 +192,14 @@ describe('DataSelect', () => {
     it ('should trigger custom propTypes warning when passing invalid proptypes', () => {
       //data propType
       let component = TestUtils.renderIntoDocument(<DataSelect  data={7}
-                                                            handleChange={handleChange}
+                                                            onChange={onChange}
                                                             listField={{fields: ['firstName', 'lastName']}} />)
       expect(console.error.callCount).to.equal(1)
       expect(console.error.calledWith('Warning: Failed propType: Invalid prop `data` supplied to `DataSelect`. Validation failed.')).to.be.true
 
       //listField propType
       component = TestUtils.renderIntoDocument(<DataSelect  data={Immutabledata}
-                                                            handleChange={handleChange}
+                                                            onChange={onChange}
                                                             listField={7} />)
       expect(console.error.callCount).to.equal(2)
       expect(console.error.calledWith('Warning: Failed propType: Invalid prop `listField` supplied to `DataSelect`. Validation failed.')).to.be.true
@@ -222,7 +222,7 @@ class Parent extends Component {
   render() {
     return (
       <DataSelect ref={(c) => this.dataSelect = c} data={this.state.data}
-                  handleChange={this.props.handleChange}
+                  onChange={this.props.onChange}
                   listField={{fields: ['firstName', 'lastName']}} />
     )
   }
