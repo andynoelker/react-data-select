@@ -5,7 +5,7 @@ import TestUtils from 'react-addons-test-utils'
 import sinon from 'sinon'
 import DataSelect from '../src/DataSelect'
 import Immutable from 'immutable'
-import { fakeImmutableData as data } from './helpers/data'
+import { fakeImmutableData as Immutabledata, fakeData } from './helpers/data'
 
 describe('DataSelect', () => {
     let component, divs, input, handleChange
@@ -15,7 +15,7 @@ describe('DataSelect', () => {
         return 'changed'
       })
 
-      component = TestUtils.renderIntoDocument(<DataSelect  data={data}
+      component = TestUtils.renderIntoDocument(<DataSelect  data={Immutabledata}
                                                             handleChange={handleChange}
                                                             listField={{fields: ['firstName', 'lastName']}} />)
       divs = TestUtils.scryRenderedDOMComponentsWithTag(component, "div")
@@ -26,6 +26,26 @@ describe('DataSelect', () => {
       expect(divs[0].className).to.equal('data-select')
       expect(component.state.list.size).to.equal(12)
       expect(component.state.list.getIn([0, 'firstName'])).to.equal('Darth')
+    })
+
+    it ('should convert Javascript data array to ImmutableJS List', () => {
+      let component = TestUtils.renderIntoDocument(<DataSelect  data={fakeData}
+                                                            handleChange={handleChange}
+                                                            listField={{fields: ['firstName', 'lastName']}} />)
+      expect(Immutable.List.isList(component.state.data)).to.be.true
+    })
+
+    it ('should update data list when passed new data', () => {
+      let component = TestUtils.renderIntoDocument(<Parent  data={Immutable.List()}
+                                                            handleChange={handleChange}
+                                                            listField={{fields: ['firstName', 'lastName']}} />)
+
+      expect(component.dataSelect.state.list.size).to.equal(0)
+
+      component.setState({data: Immutabledata})
+      expect(component.dataSelect.state.list.size).to.equal(12)
+      component.setState({data: fakeData})
+      expect(component.dataSelect.state.list.size).to.equal(12)
     })
 
     it ('should show the dropdown when the input field is focused', () => {
@@ -163,3 +183,24 @@ describe('DataSelect', () => {
     })
 
 })
+
+class Parent extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: Immutable.List()
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({data: nextProps.data})
+  }
+
+  render() {
+    return (
+      <DataSelect ref={(c) => this.dataSelect = c} data={this.state.data}
+                  handleChange={this.props.handleChange}
+                  listField={{fields: ['firstName', 'lastName']}} />
+    )
+  }
+}

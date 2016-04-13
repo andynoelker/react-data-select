@@ -3,6 +3,10 @@ import getListFieldText from '../../src/utils/getListFieldText'
 import { fakeImmutableData as data } from '../helpers/data'
 
 describe('getListFieldText', () => {
+    it ('should return the passed in data when that data is a string', () => {
+      expect(getListFieldText(data.getIn([0, 'firstName']))).to.equal('Darth')
+    })
+
     it ('should return a single field when listField is a string', () => {
         expect(getListFieldText(data.get(0), 'lastName')).to.equal('Vader')
     })
