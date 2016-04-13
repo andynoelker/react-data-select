@@ -43,7 +43,7 @@ class DataSelect extends Component {
   }
 
   componentDidUpdate() {
-    this.props.handleChange({
+    this.props.onChange({
         text: this.state.search,
         selected: this.state.selected,
     })
@@ -198,7 +198,7 @@ DataSelect.defaultProps = {
 }
 
 DataSelect.propTypes = {
-  handleChange: React.PropTypes.func.isRequired,
+  onChange: React.PropTypes.func.isRequired,
   width: React.PropTypes.number,
   listField: (props, propName, componentName) => {
     if (typeof props[propName] !== 'undefined' && typeof props[propName] !== 'string' && typeof props[propName] !== 'object') {
