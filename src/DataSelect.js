@@ -199,6 +199,7 @@ DataSelect.defaultProps = {
 
 DataSelect.propTypes = {
   handleChange: React.PropTypes.func.isRequired,
+  width: React.PropTypes.number,
   listField: (props, propName, componentName) => {
     if (typeof props[propName] !== 'string' && typeof props[propName] !== 'object') {
       return new Error(
