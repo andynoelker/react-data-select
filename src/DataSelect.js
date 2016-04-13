@@ -168,7 +168,7 @@ class DataSelect extends Component {
           rowHeight={30}
           headerHeight={36}
           rowsCount={dataLength}
-          width={275}
+          width={this.props.width}
           height={200}
           scrollToRow={this.state.highlighted}>
           <Column
@@ -186,7 +186,7 @@ class DataSelect extends Component {
                             listField={this.props.listField} />
                   }
             fixed={true}
-            width={275} />
+            width={this.props.width} />
         </Table>
       </div>
     )
