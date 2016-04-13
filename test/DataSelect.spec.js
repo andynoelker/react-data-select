@@ -8,9 +8,12 @@ import Immutable from 'immutable'
 import { fakeImmutableData as Immutabledata, fakeData } from './helpers/data'
 
 describe('DataSelect', () => {
-    let component, divs, input, handleChange
+    let component, divs, input, handleChange, sandbox
 
     beforeEach('instantiate DataSelect instance', () => {
+      sandbox = sinon.sandbox.create()
+      sandbox.stub(console, "error")
+
       handleChange = sinon.spy((e) => {
         return 'changed'
       })
@@ -21,6 +24,10 @@ describe('DataSelect', () => {
       divs = TestUtils.scryRenderedDOMComponentsWithTag(component, "div")
       input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
     })
+
+    afterEach(function () {
+        sandbox.restore();
+    });
 
     it ('should render with correct data', () => {
       expect(divs[0].className).to.equal('data-select')
@@ -180,6 +187,22 @@ describe('DataSelect', () => {
       expect(component.state.highlighted).to.equal(0)
       expect(component.state.selected).to.equal(undefined)
       expect(component.state.search).to.equal('')
+    })
+
+    it ('should trigger custom propTypes warning when passing invalid proptypes', () => {
+      //data propType
+      let component = TestUtils.renderIntoDocument(<DataSelect  data={7}
+                                                            handleChange={handleChange}
+                                                            listField={{fields: ['firstName', 'lastName']}} />)
+      expect(console.error.callCount).to.equal(1)
+      expect(console.error.calledWith('Warning: Failed propType: Invalid prop `data` supplied to `DataSelect`. Validation failed.')).to.be.true
+
+      //listField propType
+      component = TestUtils.renderIntoDocument(<DataSelect  data={Immutabledata}
+                                                            handleChange={handleChange}
+                                                            listField={7} />)
+      expect(console.error.callCount).to.equal(2)
+      expect(console.error.calledWith('Warning: Failed propType: Invalid prop `listField` supplied to `DataSelect`. Validation failed.')).to.be.true
     })
 
 })
