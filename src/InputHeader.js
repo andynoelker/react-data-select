@@ -13,7 +13,8 @@ class InputHeader extends Component {
   render() {
     return (
       <div>
-        <input type="text"  className="search-field" placeholder="Enter a location..."
+        <input type="text"  className="search-field"
+                            placeholder={this.props.placeholder ? this.props.placeholder : 'Enter search term...'}
                             ref={(c) => this._input = c}
                             value={this.props.search}
                             onChange={this.props.searchChange}

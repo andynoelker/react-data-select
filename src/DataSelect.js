@@ -174,6 +174,7 @@ class DataSelect extends Component {
           <Column
             header={<InputHeader
                       ref={(c) => this._input = c}
+                      placeholder={this.props.placeholder}
                       searchChange={this.searchChange}
                       handleFocus={this.handleFocus}
                       handleBlur={this.handleBlur}
@@ -199,6 +200,7 @@ DataSelect.defaultProps = {
 
 DataSelect.propTypes = {
   onChange: React.PropTypes.func.isRequired,
+  placeholder: React.PropTypes.string,
   width: React.PropTypes.number,
   listField: (props, propName, componentName) => {
     if (typeof props[propName] !== 'undefined' && typeof props[propName] !== 'string' && typeof props[propName] !== 'object') {
