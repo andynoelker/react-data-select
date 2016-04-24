@@ -6,7 +6,7 @@ import sinon from 'sinon'
 import InputHeader from '../src/InputHeader'
 
 describe('InputHeader', () => {
-    let component, parent, searchChange, handleKeyPress, handleFocus, handleBlur
+    let component, input, parent, searchChange, handleKeyPress, handleFocus, handleBlur
 
     beforeEach('instantiate InputHeader instance', () => {
       searchChange = sinon.spy((search) => {
@@ -30,19 +30,18 @@ describe('InputHeader', () => {
                                                             handleKeyPress={handleKeyPress}
                                                             handleFocus={handleFocus}
                                                             handleBlur={handleBlur} />)
+      input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
     })
 
     it ('should render with search text', () => {
       let wrapper = TestUtils.findRenderedDOMComponentWithTag(component, "div")
-      let input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
 
       expect(input.className).to.equal('search-field')
       expect(input.value).to.equal('Hoth')
+      expect(input.placeholder).to.equal('Enter search term...')
     })
 
     it ('should handle focus and blur calls', () => {
-      let input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
-
       TestUtils.Simulate.focus(input)
       expect(handleFocus.callCount).to.equal(1)
       expect(handleFocus.returnValues[0]).to.equal('focused')
@@ -53,18 +52,26 @@ describe('InputHeader', () => {
     })
 
     it ('should handle key presses', () => {
-      let input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
-
       TestUtils.Simulate.keyDown(input, {key: 'a'})
       expect(handleKeyPress.callCount).to.equal(1)
       expect(handleKeyPress.returnValues[0]).to.equal('a')
     })
 
     it ('should handle search change', () => {
-      let input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
-
       TestUtils.Simulate.change(input, {target: {value: 'Sith'}})
       expect(searchChange.callCount).to.equal(1)
       expect(searchChange.returnValues[0]).to.equal('Sith')
+    })
+
+    it ('should use placeholder text from props', () => {
+      component = TestUtils.renderIntoDocument(<InputHeader search="Hoth"
+                                                            placeholder="Search for Star Wars reference..."
+                                                            searchChange={searchChange}
+                                                            handleKeyPress={handleKeyPress}
+                                                            handleFocus={handleFocus}
+                                                            handleBlur={handleBlur} />)
+      input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
+
+      expect(input.placeholder).to.equal('Search for Star Wars reference...')
     })
 })
