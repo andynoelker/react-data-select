@@ -12,7 +12,7 @@ class InputHeader extends Component {
 
   render() {
     return (
-      <div className="selectize-input items not-full has-options">
+      <div>
         <input type="text"  className="search-field" placeholder="Enter a location..."
                             ref={(c) => this._input = c}
                             value={this.props.search}
