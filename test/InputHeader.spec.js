@@ -36,7 +36,6 @@ describe('InputHeader', () => {
       let wrapper = TestUtils.findRenderedDOMComponentWithTag(component, "div")
       let input = TestUtils.findRenderedDOMComponentWithTag(component, "input")
 
-      expect(wrapper.className).to.equal('selectize-input items not-full has-options')
       expect(input.className).to.equal('search-field')
       expect(input.value).to.equal('Hoth')
     })
