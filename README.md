@@ -1,6 +1,7 @@
 # React Data Select
 
 [![Build Status](https://travis-ci.org/andynoelker/react-data-select.svg?branch=master)](https://travis-ci.org/andynoelker/react-data-select)
+[![Coverage Status](https://coveralls.io/repos/github/andynoelker/react-data-select/badge.svg?branch=master)](https://coveralls.io/github/andynoelker/react-data-select?branch=master)
 
 An autocomplete Select box for data objects that only renders what you see. Handles thousands of rows of data lightning fast. It's like if Fixed Data Table and Selectize had a baby.
 
